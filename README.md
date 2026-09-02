@@ -1,6 +1,6 @@
 # Playwright Frames and Windows
 
-An enterprise-style Playwright test project for the [PlayLab sandbox](https://playwrightlab.github.io/).
+A Playwright test project for the [PlayLab sandbox](https://playwrightlab.github.io/).
 The suite demonstrates labeled page objects and fixtures for iframes, nested frames,
 cross-origin frames, new tabs, and popup windows.
 
