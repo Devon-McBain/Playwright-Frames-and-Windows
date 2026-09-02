@@ -1,0 +1,17 @@
+{
+  "name": "playwright-frames-and-windows",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Playwright automation for PlayLab frames and windows",
+  "scripts": {
+    "test": "playwright test",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "report": "playwright show-report"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@playwright/test": "^1.52.0",
+    "typescript": "^5.7.2"
+  }
+}
