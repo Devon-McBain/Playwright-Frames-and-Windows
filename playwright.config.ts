@@ -14,6 +14,10 @@ export default defineConfig({
     video: 'retain-on-failure',
     navigationTimeout: 30_000,
     actionTimeout: 10_000,
+    headless: false,
+    launchOptions: {
+      slowMo: 1000
+    }
   },
   projects: [
     { name: 'chromium', use: { ...devices['Desktop Chrome'] } },
