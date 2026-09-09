@@ -2,41 +2,28 @@ import { Locator, Page } from '@playwright/test';
 
 export class PlayLabHome {
   readonly page: Page;
-  readonly moreMenu: Locator;
-  readonly framesSection: Locator;
-  readonly practiceFrame: Locator;
-  readonly nestedFramesFrame: Locator;
-  readonly externalFrame: Locator;
-  readonly newTabButton: Locator;
-  readonly popupButton: Locator;
+  readonly iframe1: Locator;
+  readonly iframe2: Locator;
+  readonly successModalButton: Locator;
+  readonly successModal: Locator;
+  readonly successModalTitle: Locator;
+  readonly successModalBody: Locator;
 
   constructor(page: Page) {
     this.page = page;
-    this.moreMenu = page.locator('[data-testid="nav-more"]');
-    this.framesSection = page.locator('[data-testid="nav-frames"]');
-    this.practiceFrame = page.locator('[data-testid="practice-iframe"]');
-    this.nestedFramesFrame = page.locator('[data-testid="nested-frames-iframe"]');
-    this.externalFrame = page.locator('[data-testid="external-iframe"]');
-    this.newTabButton = page.locator('[data-testid="new-tab-btn"]');
-    this.popupButton = page.locator('[data-testid="popup-btn"]');
+    this.iframe1 = page.locator('[data-testid="iframe-frame-1"]');
+    this.iframe2 = page.locator('[data-testid="iframe-frame-2"]');
+    this.successModalButton = page.locator('[data-testid="modal-open-success-btn"]');
+    this.successModal = page.locator('[data-testid="modal-success"]');
+    this.successModalTitle = page.locator('[data-testid="modal-success-title"]');
+    this.successModalBody = page.locator('[data-testid="modal-success-body"]');
   }
 
-  async open(): Promise<void> {
-    await this.page.goto('/');
+  async openFrames(): Promise<void> {
+    await this.page.goto('iframe.php');
   }
 
-  async openFramesSection(): Promise<void> {
-    await this.moreMenu.click();
-    await this.framesSection.click();
-  }
-
-  practiceFrameLocator() {
-    return this.page.frameLocator('[data-testid="practice-iframe"]');
-  }
-
-  nestedInnerFrameLocator() {
-    return this.page
-      .frameLocator('[data-testid="nested-frames-iframe"]')
-      .frameLocator('[data-testid="inner-frame"]');
+  async openWindows(): Promise<void> {
+    await this.page.goto('window-popup-modal.php');
   }
 }

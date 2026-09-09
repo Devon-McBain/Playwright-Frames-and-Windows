@@ -1,8 +1,8 @@
 # Playwright Frames and Windows
 
-A Playwright test project for the [PlayLab sandbox](https://playwrightlab.github.io/).
-The suite demonstrates labeled page objects and fixtures for iframes, nested frames,
-cross-origin frames, new tabs, and popup windows.
+An enterprise-style Playwright test project for the [QA Automation Labs playground](https://testing.qaautomationlabs.com/).
+The suite demonstrates labeled page objects and fixtures for independent iframes and
+modal popup interactions.
 
 ## Project structure
 
@@ -11,11 +11,9 @@ cross-origin frames, new tabs, and popup windows.
 ├── e2e/
 │   ├── fixtures/test.ts          # Shared labeled test fixture
 │   ├── pages/
-│   │   ├── iframe-form.ts        # Controls inside iframe-content.html
-│   │   ├── login-page.ts         # Shared new-tab/popup destination
-│   │   └── playlab-home.ts       # Frames and windows entry points
-│   ├── frames.spec.ts             # Same-origin, nested, and external frames
-│   └── windows.spec.ts            # New tab and popup workflows
+│   │   └── playlab-home.ts       # Frames and popup entry points
+│   ├── frames.spec.ts             # Independent iframe workflows
+│   └── windows.spec.ts            # Modal popup workflows
 ├── playwright.config.ts          # Projects, retries, traces, and reporters
 ├── package.json
 └── tsconfig.json
@@ -24,7 +22,7 @@ cross-origin frames, new tabs, and popup windows.
 ## Prerequisites
 
 - Node.js 18 or newer
-- Network access to `https://playwrightlab.github.io/`
+- Network access to `https://testing.qaautomationlabs.com/`
 - Chromium and its Linux dependencies, installed by the command below
 
 ## Install and run
@@ -48,8 +46,8 @@ npm test
 npm test -- e2e/frames.spec.ts
 npm test -- e2e/windows.spec.ts
 
-# Run one labeled scenario by part of its title.
-npx playwright test --grep "nested"
+# Run one scenario by part of its title.
+npx playwright test --grep "iframe 1"
 
 # Watch the browser or step through the test with the inspector.
 npm run test:headed
@@ -63,30 +61,27 @@ for observing frame navigation; `test:debug` opens the Playwright inspector.
 
 - Run `npm test` before opening a pull request or after changing fixtures, page
 	objects, selectors, Playwright configuration, or browser dependencies.
-- Run `npm test -- e2e/frames.spec.ts` when changing iframe markup, nested frame
-	traversal, cross-origin behavior, or the embedded form.
-- Run `npm test -- e2e/windows.spec.ts` when changing popup handling, new-tab
-	navigation, login-page markup, or browser context behavior.
+- Run `npm test -- e2e/frames.spec.ts` when changing iframe markup or frame
+	traversal.
+- Run `npm test -- e2e/windows.spec.ts` when changing modal popup handling or
+	modal markup.
 - Run the headed or debug command when a test passes or fails unexpectedly and you
 	need to observe the browser state.
 - Run with `CI=true npm test` in continuous integration or before merging a CI
 	configuration change. CI enables retries and produces failure artifacts.
 
 These tests are especially valuable as focused Playwright training examples and
-as regression checks for browser-context boundaries. They exercise behavior that
-ordinary page tests often miss: locating controls inside frames, crossing nested
-frame boundaries, and attaching popup listeners before a user action creates a
-new page.
+as regression checks for iframe and modal behavior. They exercise behavior that
+ordinary page tests often miss: locating controls inside independent frames and
+verifying modal visibility and dismissal.
 
 ## Coverage
 
 The suite currently verifies:
 
-- Same-origin iframe form entry, selection, checkbox state, submission, and result text
-- Nested iframe traversal from the outer frame to the inner form
-- Cross-origin iframe content access through Playwright's frame locator API
-- New-tab navigation to the shared login page
-- Popup-window navigation to the shared login page
+- Independent iframe traversal through Playwright's frame locator API
+- Frame-specific headings and controls inside both embedded frames
+- Modal popup opening and closing
 
 The tests deliberately assert stable `data-testid` contracts and business-visible
 results instead of CSS layout or implementation-specific frame URLs.
@@ -104,17 +99,17 @@ separate projects when the suite needs a browser compatibility matrix.
 ## Troubleshooting
 
 - **Browser executable missing:** run `npx playwright install --with-deps chromium`.
-- **Navigation timeout:** verify network access to the sandbox and retry; the suite
+- **Navigation timeout:** verify network access to the playground and retry; the suite
   intentionally tests a live external site rather than starting a local web server.
-- **Popup timeout:** keep the `waitForEvent('popup')` listener before the button click.
-- **Frame locator timeout:** confirm the iframe's `data-testid` in the sandbox before
+
+- **Modal timeout:** confirm the modal open button and modal `data-testid` values in
+	the playground before changing a page object selector.
+- **Frame locator timeout:** confirm the iframe's `data-testid` in the playground before
 	changing a page object selector.
 
 ## Design conventions
 
 - Test files describe user behavior; page objects own selectors and interactions.
-- `data-testid` selectors are preferred for the sandbox's stable automation contract.
-- Every frame/window has a semantic label in the test title and trace output.
-- `page.waitForEvent('popup')` and `context.waitForEvent('page')` are armed before
-	the click that creates the new browsing context.
+- `data-testid` selectors are preferred for the playground's stable automation contract.
+- Every frame/modal has a semantic label in the test title and trace output.
 - Assertions use web-first Playwright assertions, with no arbitrary sleeps.

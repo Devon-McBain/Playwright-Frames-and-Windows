@@ -2,7 +2,7 @@
   "name": "playwright-frames-and-windows",
   "version": "1.0.0",
   "private": true,
-  "description": "Playwright automation for PlayLab frames and windows",
+  "description": "Playwright automation for QA Automation Labs frames and modal popups",
   "scripts": {
     "test": "playwright test",
     "test:headed": "playwright test --headed",
