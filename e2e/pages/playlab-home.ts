@@ -22,7 +22,7 @@ export class PlayLabHome {
   }
 
   async open(): Promise<void> {
-    await this.page.goto('/');
+    await this.page.goto('/index.html');
   }
 
   async openFramesSection(): Promise<void> {

@@ -5,6 +5,7 @@
   "description": "Playwright automation for PlayLab frames and windows",
   "scripts": {
     "test": "playwright test",
+    //"test:short" : "playwright --ui",
     "test:headed": "playwright test --headed",
     "test:debug": "playwright test --debug",
     "report": "playwright show-report"
